@@ -90,7 +90,7 @@ Eureka 采用了 CS 的设计架构，Eureka Server 作为服务注册功能的�
 
 在服务注册与发现中，有一个注册中心。当服务器启动的时候，会把当前服务器的信息：比如，服务地址、通讯地址等以别名方式注册到注册中心上。另一方（消费者|服务提供者）以该别名的方式去注册中心上获取到实际的服务通讯地址，然后再实现本地 RPC 远程调用框架设计核心思想：在于注册中心，因为使用注册中心管理每个服务与服务之间的一个依赖关系（服务治理概念）。在任何 rpc 远程框架中，都会有一个注册中心（存放服务地址相关信息（接口地址））
 
-<img src="C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201109170652970.png" alt="image-20201109170652970"  />
+<img src="https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191310.png" alt="image-20201109170652970"  />
 
 ### 3、Eureka 两组件
 
@@ -611,7 +611,7 @@ public class ApplicationContextConfig {
 
 ### 1、Eureka 集群说明
 
-![image-20201110094031555](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201110094031555.png)
+![image-20201110094031555](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191323.png)
 
 ### 2、Eureka Server 集群环境构建步骤
 
@@ -1152,7 +1152,7 @@ public Object discover(){
 
 ### 1、故障现象
 
-![image-20201110103943603](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201110103943603.png)
+![image-20201110103943603](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191337.png)
 
 ### 2、导致原因
 

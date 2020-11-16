@@ -166,7 +166,7 @@ http://localhost:8004/payment/zk
 
 #### 2）zookeeper 服务器
 
-![image-20201111155825938](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201111155825938.png)
+![image-20201111155825938](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191353.png)
 
 **服务节点为临时节点**
 
@@ -320,4 +320,4 @@ http://localhost:8000/consumer/payment/zk
 
 #### 2）zookeeper 服务器
 
-![image-20201111160441210](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201111160441210.png)
+![image-20201111160441210](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191359.png)

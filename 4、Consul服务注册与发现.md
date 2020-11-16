@@ -74,7 +74,7 @@ Consul支持多数据中心
 
 #### 5）可视化 web 界面
 
-![image-20201116095245143](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201116095245143.png)
+![image-20201116095245143](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191415.png)
 
 ### 3、官网
 
@@ -279,11 +279,11 @@ public class PaymentController {
 
 访问 http://localhost:8006/payment/consul
 
-![image-20201116101546723](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201116101546723.png)
+![image-20201116101546723](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191422.png)
 
 访问 http://192.168.183.101:8500
 
-![image-20201116101632164](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201116101632164.png)
+![image-20201116101632164](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191426.png)
 
 ### 2、服务消费者
 
@@ -467,7 +467,7 @@ public class OrderConsulController {
 
 http://localhost:8006/payment/consul
 
-![image-20201116102256848](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201116102256848.png)
+![image-20201116102256848](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191433.png)
 
 访问测试地址
 
