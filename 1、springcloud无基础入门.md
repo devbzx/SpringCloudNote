@@ -186,7 +186,7 @@ https://start.spring.io/actuator/info
 
 ### 4）组件的使用
 
-![image-20201104101726632](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201104101726632.png)
+![image-20201104101726632](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191202.png)
 
 ## 2、微服务架构编码构建
 
@@ -740,7 +740,7 @@ public class OrderController {
 
 ## 3、工程样图
 
-![image-20201104105317362](C:\Users\13014\AppData\Roaming\Typora\typora-user-images\image-20201104105317362.png)
+![image-20201104105317362](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191222.png)
 
 
 
