@@ -270,7 +270,7 @@ public class PaymentController {
     private String serverPort;
     @RequestMapping(value = "/payment/consul")
     public String paymentConsul(){
-        return "spring cloud with zookeeper:"+serverPort+"\t"+ UUID.randomUUID().toString();
+        return "spring cloud with consul:"+serverPort+"\t"+ UUID.randomUUID().toString();
     }
 }
 ```
