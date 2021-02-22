@@ -94,7 +94,7 @@ Gateway旨在提供一种简单而有效的方式来对API进行路由，以及�
 
 ### 2、Predicate（断言）
 
-> 参考的是Java8的java.util.function.Predicate        开发人员可以匹配HTTP请求中的所有内容（例如请求头或请求参数），**如果请求与断言相匹配则进行路由**。
+> 参考的是 Java8 的 java.util.function.Predicate 开发人员可以匹配HTTP请求中的所有内容（例如请求头或请求参数），**如果请求与断言相匹配则进行路由**。
 
 ### 3、Filter（过滤）
 
@@ -427,7 +427,237 @@ SpringCloudNetFlixRibbon 会在定义 lb 前缀的目标 URL 上实现负载均�
 
 ## 六、Predicate 的使用
 
+### 1、是什么
+
+启动 GateWay9527 我们发现使用 PredicateFactory 加载了红框包围的内容。
+
+![image-20210222101842286](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222101842.png)
+
+每一个断言 Predicate 都有它独特的规则，多个 Predicate 断言是一个与 & 组合。
+
+### 2、使用其他断言
+
+#### 1）After Route Predicate Factory
+
+> 之后的时间能访问
+
+##### 1、获得当前时区的时间
+
+```java
+public class T2 {
+    public static void main(String[] args) {
+        ZonedDateTime now = ZonedDateTime.now();
+        System.out.println(now);
+    }
+}
+```
+
+![image-20210222103001662](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222103001.png)
+
+##### 2、配 yml
+
+![image-20210222103842924](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222103843.png)
+
+在原来的基础上加上红线划的部分
+
+##### 3、测试
+
+如果时间没到，则直接404
+
+![image-20210222104004748](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222104004.png)
+
+时间到了正常访问
+
+![image-20210222104119152](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222104119.png)
+
+#### 2）Before Route Predicate
+
+> 之前的时间能访问
+
+#### 3）Between Route Predicate
+
+> 之间的时间能访问
+
+> Cookie Route Predicate 需要两个参数，一个是 Cookie name，一个是正则表达式。
+>
+> 路由规则会通过获取对应的 Cookie name 值和正则表达式去匹配，如果匹配上就会执行路由，如果没有匹配就不执行
+
+#### 4）Cookie Route Predicate
+
+##### 1、配 yml
+
+![image-20210222105234904](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222105234.png)
+
+加上红线划的部分
+
+逗号前为键，逗号后为值
+
+##### 2、测试
+
+> 使用 curl 测试
+
+未携带 cookie
+
+![image-20210222105422565](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222105422.png)
+
+携带正确的 cookie
+
+curl http://localhost:9527/payment/lb --cookie "username=zzyy"
+
+![image-20210222105459695](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222105459.png)
+
+#### 5）Header Route Predicate Factory
+
+> 两个参数：一个是属性名称和一个正则表达式，这个属性值和正则表达式匹配则执行。
+
+##### 1、配 yml
+
+![image-20210222110742868](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222110742.png)
+
+加上红线划的部分
+
+##### 2、测试
+
+curl http://localhost:9527/payment/lb -H "X-Request-Id:123"
+
+![image-20210222111201812](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210222111201.png)
+
+#### 6）Host Route Predicate
+
+添加 host 过滤
+
+```yaml
+- Host=**.lhq.com
+```
+
+#### 7）Method route Predicate
+
+```yaml
+- Method=GET
+```
+
+#### 8）Path Route Predicate
+
+```yaml
+- Path=/payment/lb/**
+```
+
+#### 9）Query Route Predicate
+
+```yaml
+- Query=username, \d+ # 要有参数名 username 并且值还要是整数才能路由
+```
+
+http://localhost:9527/payment/lb?username=31
+
+http://localhost:9527/payment/lb?username=-31
+
+### 3、总结
+
+> 断言就是为了实现一组匹配规则，让请求过来找到对应的 Route 进行处理。
+
+全部配置
+
+```yaml
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用为服务名进行路由。
+      routes:   # 可以为controller中的所有rest接口做路由
+        - id: payment_routh           # 路由id：payment_route，没有固定规则，建议配合服务名
+#          uri: http://localhost:8001  # 匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service  # lb://开头代表从注册中心中获取服务，后面接的就是你需要转发到的服务名称
+          predicates:
+            - Path=/payment/get/**    # 断言：路径相匹配的进行路由
+
+        - id: payment_routh2
+#          uri: http://localhost:8001
+          uri: lb://cloud-payment-service
+          predicates:
+            - Path=/payment/lb/**
+            - After=2021-02-22T10:28:20.777+08:00[Asia/Shanghai]
+            - Before=2021-02-22T10:28:20.777+08:00[Asia/Shanghai]
+            - Between=2021-02-22T10:28:20.777+08:00[Asia/Shanghai],2021-02-22T11:28:20.777+08:00[Asia/Shanghai]
+            - Cookie=username,zzyy
+            - Header=X-Request-Id, \d+ # 请求头要有 X-Request-Id 属性，并且值为整数的正则表达式
+            - Host=**.lhq.com
+            - Method=GET
+            - Query=username, \d+ # 要有参数名 username 并且值还要是整数才能路由
+	
+```
+
+
+
 ## 七、Filter 的使用
 
+### 1、是什么
 
+路由过滤器可用于修改进入的 HTTP 请求和返回的 HTTP 响应，路由过滤器只能指定路由进行使用。
 
+Spring Cloud Gateway 内置了多种路由过滤器，他们都由 GatewayFilter 的工厂类来产生。
+
+### 2、Spring Cloud Gateway 的 Filter
+
+#### 1）生命周期
+
+pre（业务逻辑之前），post（业务逻辑之后）
+
+#### 2）种类
+
+GatewayFilter（单一的），Global Filter（全局的）
+
+#### 3）常用的 GatewayFilter
+
+例子 
+
+```yml
+filters:
+        - AddRequestHeader=X-Request-red, blue
+```
+
+https://docs.spring.io/spring-cloud-gateway/docs/2.2.7.RELEASE/reference/html/#gatewayfilter-factories
+
+#### 4）自定义过滤器
+
+两个主要接口介绍：implements GlobalFilter, Ordered
+
+##### 1、定义一个全局过滤器
+
+```java
+@Component
+@Slf4j
+public class MyLogGateWayFilter implements GlobalFilter, Ordered {
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.info("**************come in MyLogGateWayFilter:" + new Date());
+        String uname = exchange.getRequest().getQueryParams().getFirst("uname");
+        if (uname == null){
+            log.info("******用户名为null，非法用户，o(T_T)o");
+            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+            return exchange.getResponse().setComplete();
+        }
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
+    }
+
+}
+```
+
+##### 2、测试
+
+成功链接
+
+http://localhost:9527/payment/get/1?uname=55
+
+失败链接
+
+http://localhost:9527/payment/get/1

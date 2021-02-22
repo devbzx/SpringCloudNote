@@ -796,7 +796,7 @@ http://localhost:8001/payment/circuit/1
 
 ### 3、如何看此图
 
-![img](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210220113550.png)
+![img](C:%5CUsers%5C13014%5CDesktop%5C20210220113550.png)
 
 ![img](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20210220113606.png)
 
