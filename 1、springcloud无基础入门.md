@@ -196,7 +196,7 @@ https://start.spring.io/actuator/info
 
 #### 1、新建 maven 工程
 
-#### 2、pom
+#### 2、pom 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

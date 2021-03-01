@@ -214,7 +214,7 @@ public class EurekaMain7001 {
 
 ### 2、cloud-provider-payment8001（客户端）
 
-服务提供者
+服务提供者 
 
 #### 1）pom.xml
 
