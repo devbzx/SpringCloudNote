@@ -186,7 +186,7 @@ https://start.spring.io/actuator/info
 
 ### 4）组件的使用
 
-![image-20201104101726632](https://gitee.com/li_hao_qi/imgbed/raw/master/img/20201116191202.png)
+![image-20201104101726632](C:%5CUsers%5C13014%5CDesktop%5C20201116191202.png)
 
 ## 2、微服务架构编码构建
 
